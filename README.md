@@ -9,7 +9,7 @@ CrewAI / LangGraph 기반 AI Agent 프로젝트 워크스페이스입니다.
 | Python | 3.12.10 (`.python-version` 으로 고정) |
 | 패키지 관리 | [uv](https://docs.astral.sh/uv/) (`uv.lock` 으로 버전 고정) |
 | 가상환경 | `.venv` |
-| 주요 라이브러리 | `crewai`, `langgraph` |
+| 주요 라이브러리 | `crewai`, `langgraph`, `langchain-openai` |
 
 Python 버전과 모든 의존성 버전이 `.python-version` + `uv.lock` 에 고정되어 있어,
 어떤 PC에서 클론하더라도 완전히 동일한 환경이 재현됩니다.
@@ -75,13 +75,46 @@ pip install -r requirements.txt -r requirements-dev.txt
 Python 자체는 [3.12.10 공식 설치 파일](https://www.python.org/downloads/release/python-31210/)을
 받아 맞추면 되고, 다른 3.12.x 를 쓰더라도 휠 ABI 태그가 `cp312` 로 같아 설치에는 문제가 없습니다.
 
-## 🔑 환경 변수
+## 🔑 API 키 설정
 
 ```bash
-cp .env.example .env    # Windows: copy .env.example .env
+copy .env.example .env    # Windows
+cp .env.example .env      # macOS / Linux
 ```
 
-`.env` 에 사용하는 LLM 제공자의 API 키를 채워 넣으세요. `.env` 는 커밋되지 않습니다.
+생성된 `.env` 를 열어 `OPENAI_API_KEY=` 뒤에 키를 붙여넣으면 끝입니다.
+
+```
+OPENAI_API_KEY=sk-...
+```
+
+### 동작 방식
+
+`.env` 는 특별한 파일이 아니라 **환경변수를 적어둔 텍스트 파일**입니다.
+`load_dotenv()` 가 이 파일을 읽어 `os.environ` 에 넣어주고,
+OpenAI SDK 는 `os.environ` 에서 `OPENAI_API_KEY` 를 알아서 찾아 씁니다.
+
+```python
+from dotenv import load_dotenv
+
+load_dotenv()   # .env → os.environ
+
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(model="gpt-4o-mini")   # 키를 코드에 쓸 필요가 없음
+```
+
+즉 **코드에는 키가 전혀 등장하지 않습니다.** 이게 핵심입니다.
+
+### 안전 장치
+
+| 파일 | 커밋 여부 | 용도 |
+| --- | --- | --- |
+| `.env` | ❌ (`.gitignore` 등록됨) | 실제 키. 내 PC 에만 존재 |
+| `.env.example` | ✅ | 키 **이름만** 적힌 템플릿. 팀 공유용 |
+
+> ⚠️ 실제 키는 `.env` 에만 넣으세요. `.env.example` 이나 코드에 넣으면 커밋됩니다.
+> 한 번 푸시된 키는 커밋을 지워도 git 히스토리에 남으므로, 유출 시 즉시 폐기하고 재발급해야 합니다.
 
 ## ✅ 환경 검증
 
