@@ -19,3 +19,4 @@ env/
 # Logs & Cache
 *.log
 .pytest_cache/
+.ruff_cache/
