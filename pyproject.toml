@@ -19,8 +19,6 @@ dev = [
 [tool.uv]
 # 애플리케이션 워크스페이스이므로 자기 자신을 패키지로 빌드/설치하지 않음
 package = false
-# Python 3.12.14 다운로드를 지원하는 최소 uv 버전 (이하 버전은 설치 불가)
-required-version = ">=0.12.9"
 
 [tool.ruff]
 target-version = "py312"

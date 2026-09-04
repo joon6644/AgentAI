@@ -11,8 +11,8 @@ if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
     Invoke-RestMethod https://astral.sh/uv/install.ps1 | Invoke-Expression
     $env:Path = "$env:USERPROFILE\.local\bin;$env:Path"
 } else {
-    # pyproject.toml 의 required-version 을 못 맞추면 Python 3.12.14 를 받을 수 없음
-    uv self update
+    # 최신 uv 를 권장하지만 필수는 아니므로, 실패해도 설치를 계속 진행
+    try { uv self update } catch { Write-Host "uv 업데이트를 건너뜁니다." -ForegroundColor DarkGray }
 }
 
 Write-Host "[2/3] Python 및 의존성 설치 중..." -ForegroundColor Cyan

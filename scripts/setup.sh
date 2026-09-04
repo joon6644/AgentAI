@@ -11,8 +11,8 @@ if ! command -v uv >/dev/null 2>&1; then
     curl -LsSf https://astral.sh/uv/install.sh | sh
     export PATH="$HOME/.local/bin:$PATH"
 else
-    # pyproject.toml 의 required-version 을 못 맞추면 Python 3.12.14 를 받을 수 없음
-    uv self update || true
+    # 최신 uv 를 권장하지만 필수는 아니므로, 실패해도 설치를 계속 진행
+    uv self update || echo "uv 업데이트를 건너뜁니다."
 fi
 
 echo "[2/3] Python 및 의존성 설치 중..."
