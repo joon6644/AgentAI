@@ -159,6 +159,14 @@ AgentAI/
 ├── scripts/
 │   ├── setup.ps1            # Windows 환경 구축 스크립트
 │   └── setup.sh             # macOS/Linux 환경 구축 스크립트
-└── tests/
-    └── test_environment.py  # 환경 검증 스모크 테스트
+├── tests/
+│   └── test_environment.py  # 환경 검증 스모크 테스트
+└── w02/                     # 주차별 과제 폴더
+    └── README.md
 ```
+
+주차 폴더는 `w02`, `w03` … 처럼 **두 자리로 맞춥니다.**
+`w2` 로 두면 10주차부터 `w1, w10, w11, w2` 순으로 정렬이 어긋납니다.
+
+각 주차 폴더 안의 `test_*.py` 는 `uv run pytest` 로 자동 수집됩니다
+(`pyproject.toml` 의 `testpaths = ["tests", "w*"]`).
