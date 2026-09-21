@@ -246,6 +246,7 @@ numpy==2.5.2
     #   chromadb
     #   lancedb
     #   onnxruntime
+    #   pandas
 oauthlib==3.3.1
     # via requests-oauthlib
 onnxruntime==1.29.0
@@ -310,6 +311,8 @@ packaging==26.3
     #   langchain-core
     #   langsmith
     #   onnxruntime
+pandas==3.0.5
+    # via agentai
 pdfminer-six==20260107
     # via pdfplumber
 pdfplumber==0.11.10
@@ -385,6 +388,7 @@ python-dateutil==2.9.0.post0
     # via
     #   kubernetes
     #   lance-namespace-urllib3-client
+    #   pandas
     #   pendulum
     #   posthog
 python-dotenv==1.2.3
@@ -530,7 +534,9 @@ typing-inspection==0.4.4
     #   pydantic
     #   pydantic-settings
 tzdata==2026.3
-    # via pendulum
+    # via
+    #   pandas
+    #   pendulum
 urllib3==2.7.0
     # via
     #   kubernetes
